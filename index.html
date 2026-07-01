@@ -21,6 +21,7 @@
     <div class="beam beam-1"></div>
     <div class="beam beam-2"></div>
   </div>
+  <div id="theme-beam" class="theme-beam" aria-hidden="true"></div>
 
   <!-- Navigation -->
   <nav id="main-nav" role="navigation" aria-label="Main navigation">
@@ -40,19 +41,19 @@
 
     <!-- HOME SECTION -->
     <section id="home" class="section active-section" aria-label="Home">
-      <div class="content-wrapper">
-        <header class="site-header">
-          <h1 class="name">Aiyan</h1>
-          <p class="tagline">self-taught developer building things for the web. passionate about clean code and great user experiences.</p>
-          <div class="social-links" aria-label="Social links">
-            <a href="#" class="social-link" id="link-cv" target="_blank" rel="noopener">cv</a>
-            <a href="https://github.com/" class="social-link" id="link-github" target="_blank" rel="noopener">github</a>
-            <a href="https://twitter.com/" class="social-link" id="link-twitter" target="_blank" rel="noopener">twitter (x)</a>
-            <a href="https://linkedin.com/" class="social-link" id="link-linkedin" target="_blank" rel="noopener">linkedin</a>
-            <a href="#contact" class="social-link" id="link-message">message</a>
-          </div>
-        </header>
+      <div class="sidebar-col">
+        <h1 class="name">Aiyan</h1>
+        <p class="tagline">self-taught developer building things for the web. passionate about clean code and great user experiences.</p>
+        <div class="social-links" aria-label="Social links">
+          <a href="#" class="social-link" id="link-cv" target="_blank" rel="noopener">cv</a>
+          <a href="https://github.com/" class="social-link" id="link-github" target="_blank" rel="noopener">github</a>
+          <a href="https://twitter.com/" class="social-link" id="link-twitter" target="_blank" rel="noopener">twitter (x)</a>
+          <a href="https://linkedin.com/" class="social-link" id="link-linkedin" target="_blank" rel="noopener">linkedin</a>
+          <a href="#contact" class="social-link" id="link-message">message</a>
+        </div>
+      </div>
 
+      <div class="content-col">
         <div class="section-block">
           <h2 class="block-title">philosophy</h2>
           <ul class="philosophy-list">
@@ -122,62 +123,82 @@
             </div>
           </div>
         </div>
-
       </div>
     </section>
 
     <!-- ART SECTION -->
     <section id="art" class="section" aria-label="Art">
-      <div class="content-wrapper">
-        <header class="site-header">
-          <h1 class="name">Aiyan</h1>
-          <p class="tagline">creative explorations — visual experiments and digital art.</p>
-        </header>
+      <div class="sidebar-col">
+        <h1 class="name">Aiyan</h1>
+        <p class="tagline">creative explorations — visual experiments and digital art.</p>
+        <div class="social-links" aria-label="Social links">
+          <a href="https://twitter.com/" class="social-link" target="_blank" rel="noopener">twitter (x)</a>
+          <a href="#contact" class="social-link">message</a>
+        </div>
+      </div>
 
-        <div class="section-block">
-          <p class="art-subtitle">things i make when i'm not writing code.</p>
-          <div class="art-grid" id="art-grid">
-            <div class="art-card" tabindex="0" aria-label="Art piece 1">
-              <div class="art-placeholder art-1">
-                <span>01</span>
-              </div>
-              <p class="art-title">generative geometry</p>
-              <p class="art-meta">canvas / 2024</p>
+      <div class="content-col">
+        <h2 class="block-title">art</h2>
+        <p class="art-subtitle">things i make when i'm not writing code.</p>
+        <div class="art-grid" id="art-grid">
+          <div class="art-card" tabindex="0" aria-label="Art piece 1">
+            <div class="art-placeholder art-1">
+              <span>01</span>
             </div>
-            <div class="art-card" tabindex="0" aria-label="Art piece 2">
-              <div class="art-placeholder art-2">
-                <span>02</span>
-              </div>
-              <p class="art-title">light studies</p>
-              <p class="art-meta">photography / 2024</p>
+            <p class="art-title">generative geometry</p>
+            <p class="art-meta">canvas / 2024</p>
+            <div class="art-links">
+              <a href="https://figma.com/" target="_blank" rel="noopener" class="art-link-btn">view on figma</a>
             </div>
-            <div class="art-card" tabindex="0" aria-label="Art piece 3">
-              <div class="art-placeholder art-3">
-                <span>03</span>
-              </div>
-              <p class="art-title">typographic posters</p>
-              <p class="art-meta">figma / 2023</p>
+          </div>
+          <div class="art-card" tabindex="0" aria-label="Art piece 2">
+            <div class="art-placeholder art-2">
+              <span>02</span>
             </div>
-            <div class="art-card" tabindex="0" aria-label="Art piece 4">
-              <div class="art-placeholder art-4">
-                <span>04</span>
-              </div>
-              <p class="art-title">ui experiments</p>
-              <p class="art-meta">css / 2024</p>
+            <p class="art-title">light studies</p>
+            <p class="art-meta">photography / 2024</p>
+            <div class="art-links">
+              <a href="https://unsplash.com/" target="_blank" rel="noopener" class="art-link-btn">view collection</a>
             </div>
-            <div class="art-card" tabindex="0" aria-label="Art piece 5">
-              <div class="art-placeholder art-5">
-                <span>05</span>
-              </div>
-              <p class="art-title">color theory</p>
-              <p class="art-meta">canvas / 2023</p>
+          </div>
+          <div class="art-card" tabindex="0" aria-label="Art piece 3">
+            <div class="art-placeholder art-3">
+              <span>03</span>
             </div>
-            <div class="art-card" tabindex="0" aria-label="Art piece 6">
-              <div class="art-placeholder art-6">
-                <span>06</span>
-              </div>
-              <p class="art-title">motion studies</p>
-              <p class="art-meta">css / 2024</p>
+            <p class="art-title">typographic posters</p>
+            <p class="art-meta">figma / 2023</p>
+            <div class="art-links">
+              <a href="https://figma.com/" target="_blank" rel="noopener" class="art-link-btn">view on figma</a>
+            </div>
+          </div>
+          <div class="art-card" tabindex="0" aria-label="Art piece 4">
+            <div class="art-placeholder art-4">
+              <span>04</span>
+            </div>
+            <p class="art-title">ui experiments</p>
+            <p class="art-meta">css / 2024</p>
+            <div class="art-links">
+              <a href="https://codepen.io/" target="_blank" rel="noopener" class="art-link-btn">open codepen</a>
+            </div>
+          </div>
+          <div class="art-card" tabindex="0" aria-label="Art piece 5">
+            <div class="art-placeholder art-5">
+              <span>05</span>
+            </div>
+            <p class="art-title">color theory</p>
+            <p class="art-meta">canvas / 2023</p>
+            <div class="art-links">
+              <a href="https://figma.com/" target="_blank" rel="noopener" class="art-link-btn">view palette</a>
+            </div>
+          </div>
+          <div class="art-card" tabindex="0" aria-label="Art piece 6">
+            <div class="art-placeholder art-6">
+              <span>06</span>
+            </div>
+            <p class="art-title">motion studies</p>
+            <p class="art-meta">css / 2024</p>
+            <div class="art-links">
+              <a href="https://codepen.io/" target="_blank" rel="noopener" class="art-link-btn">open codepen</a>
             </div>
           </div>
         </div>
@@ -186,17 +207,18 @@
 
     <!-- PROJECTS SECTION -->
     <section id="projects" class="section" aria-label="Projects">
-      <div class="content-wrapper">
-        <header class="site-header">
-          <h1 class="name">Aiyan</h1>
-          <p class="tagline">All open source projects available on GitHub.</p>
-          <div class="social-links" aria-label="Project links">
-            <a href="https://github.com/" class="social-link" id="proj-github" target="_blank" rel="noopener">github</a>
-            <a href="https://twitter.com/" class="social-link" id="proj-twitter" target="_blank" rel="noopener">twitter (x)</a>
-            <a href="#contact" class="social-link" id="proj-message">message</a>
-          </div>
-        </header>
+      <div class="sidebar-col">
+        <h1 class="name">Aiyan</h1>
+        <p class="tagline">All projects my open source projects available on GitHub.</p>
+        <div class="social-links" aria-label="Project links">
+          <a href="https://github.com/" class="social-link" id="proj-github" target="_blank" rel="noopener">github</a>
+          <a href="https://twitter.com/" class="social-link" id="proj-twitter" target="_blank" rel="noopener">twitter (x)</a>
+          <a href="#contact" class="social-link" id="proj-message">message</a>
+        </div>
+      </div>
 
+      <div class="content-col">
+        <h2 class="block-title">projects</h2>
         <div class="projects-grid" id="projects-grid">
           <div class="project-card" tabindex="0" aria-label="Project: Dev Portfolio">
             <div class="project-preview proj-1">
@@ -210,6 +232,10 @@
             <div class="project-info">
               <p class="project-name">Dev Portfolio</p>
               <p class="project-desc">A minimalist portfolio template for developers</p>
+              <div class="project-links">
+                <a href="https://tristanhendricks.vercel.app/" target="_blank" rel="noopener" class="project-link-btn">live demo</a>
+                <a href="https://github.com/" target="_blank" rel="noopener" class="project-link-btn">github</a>
+              </div>
             </div>
           </div>
 
@@ -225,6 +251,10 @@
             <div class="project-info">
               <p class="project-name">Task Manager</p>
               <p class="project-desc">Organize tasks with real-time sync</p>
+              <div class="project-links">
+                <a href="https://example.com" target="_blank" rel="noopener" class="project-link-btn">live demo</a>
+                <a href="https://github.com/" target="_blank" rel="noopener" class="project-link-btn">github</a>
+              </div>
             </div>
           </div>
 
@@ -240,6 +270,10 @@
             <div class="project-info">
               <p class="project-name">Weather App</p>
               <p class="project-desc">Real-time weather with beautiful UI</p>
+              <div class="project-links">
+                <a href="https://example.com" target="_blank" rel="noopener" class="project-link-btn">live demo</a>
+                <a href="https://github.com/" target="_blank" rel="noopener" class="project-link-btn">github</a>
+              </div>
             </div>
           </div>
 
@@ -255,6 +289,10 @@
             <div class="project-info">
               <p class="project-name">Chat Application</p>
               <p class="project-desc">Real-time messaging with WebSockets</p>
+              <div class="project-links">
+                <a href="https://example.com" target="_blank" rel="noopener" class="project-link-btn">live demo</a>
+                <a href="https://github.com/" target="_blank" rel="noopener" class="project-link-btn">github</a>
+              </div>
             </div>
           </div>
 
@@ -270,6 +308,10 @@
             <div class="project-info">
               <p class="project-name">E-Commerce Store</p>
               <p class="project-desc">Full-stack shop with payments</p>
+              <div class="project-links">
+                <a href="https://example.com" target="_blank" rel="noopener" class="project-link-btn">live demo</a>
+                <a href="https://github.com/" target="_blank" rel="noopener" class="project-link-btn">github</a>
+              </div>
             </div>
           </div>
 
@@ -285,6 +327,10 @@
             <div class="project-info">
               <p class="project-name">AI Chatbot</p>
               <p class="project-desc">Powered by Gemini API</p>
+              <div class="project-links">
+                <a href="https://example.com" target="_blank" rel="noopener" class="project-link-btn">live demo</a>
+                <a href="https://github.com/" target="_blank" rel="noopener" class="project-link-btn">github</a>
+              </div>
             </div>
           </div>
         </div>
@@ -293,12 +339,12 @@
 
     <!-- ABOUT SECTION -->
     <section id="about" class="section" aria-label="About">
-      <div class="content-wrapper">
-        <header class="site-header">
-          <h1 class="name">Aiyan</h1>
-          <p class="tagline">i'm a developer who loves building great software.</p>
-        </header>
+      <div class="sidebar-col">
+        <h1 class="name">Aiyan</h1>
+        <p class="tagline">i'm a developer who loves building great software.</p>
+      </div>
 
+      <div class="content-col">
         <div class="section-block">
           <h2 class="block-title">fun facts</h2>
           <ul class="facts-list" id="facts-list">
@@ -327,7 +373,6 @@
             <a href="mailto:hello@aiyan.dev" class="contact-email" id="contact-email">hello@aiyan.dev</a>
           </div>
         </div>
-
       </div>
     </section>
 
