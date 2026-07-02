@@ -59,13 +59,37 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ---- SMOOTH THEME TRANSITIONS ---- */
+/*
+  All elements smoothly interpolate color/bg/border when the theme
+  CSS variables change. Duration matches the View Transitions circle.
+  The `transition-property` list is explicit to avoid animating layout.
+*/
+*,
+*::before,
+*::after {
+  transition:
+    background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    color            0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color     0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow       0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity          0.3s ease,
+    fill             0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Disable theme transition during page load to avoid flash */
+html.no-transition *,
+html.no-transition *::before,
+html.no-transition *::after {
+  transition: none !important;
+}
+
 body {
   font-family: var(--font-mono);
   background-color: var(--bg);
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
-  transition: background-color 0.4s ease, color 0.4s ease;
   position: relative;
 }
 
@@ -123,6 +147,53 @@ ul {
   transform: rotate(-15deg);
   transform-origin: top center;
   animation: beamFloat2 16s ease-in-out infinite alternate;
+}
+
+/* ---- VIEW TRANSITIONS API — THEME SWITCH ---- */
+/*
+  Uses the native document.startViewTransition() — same technique as
+  tristanhendricks.vercel.app. The new theme slides in as a circle
+  expanding from the toggle button, while the old theme fades out.
+*/
+
+/* The old page snapshot fades out from full opacity to zero */
+::view-transition-old(root) {
+  animation: theme-out 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* The new page snapshot expands from a circle at the button origin */
+::view-transition-new(root) {
+  animation: theme-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes theme-in {
+  from {
+    clip-path: circle(0px at var(--theme-origin-x, 50%) var(--theme-origin-y, 50%));
+  }
+  to {
+    clip-path: circle(200vmax at var(--theme-origin-x, 50%) var(--theme-origin-y, 50%));
+  }
+}
+
+@keyframes theme-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* Fallback: if View Transitions not supported, just fade body colours */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+  body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
+
+/* Keep the old .theme-beam element but make it invisible (JS still references it) */
+.theme-beam {
+  display: none;
 }
 
 @keyframes beamFloat1 {
@@ -223,13 +294,15 @@ ul {
 /* ---- SECTIONS ---- */
 .section {
   display: none;
-  min-height: calc(100vh - 80px);
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 40px 40px 120px;
   animation: fadeInSection 0.3s ease;
 }
 
 .section.active-section {
-  display: block;
+  display: flex;
+  gap: 60px;
 }
 
 @keyframes fadeInSection {
@@ -237,8 +310,20 @@ ul {
   to { opacity: 1; transform: translateY(0); }
 }
 
-.content-wrapper {
-  max-width: 560px;
+.sidebar-col {
+  width: 320px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 120px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content-col {
+  flex-grow: 1;
+  min-width: 0;
 }
 
 /* ---- HEADER ---- */
@@ -420,10 +505,9 @@ ul {
 
 .art-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
   width: 100%;
-  max-width: 700px;
 }
 
 .art-card {
@@ -482,9 +566,8 @@ ul {
 /* ---- PROJECTS SECTION ---- */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  max-width: 900px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
   margin-top: 24px;
 }
 
@@ -733,21 +816,35 @@ ul {
     padding: 30px 20px 100px;
   }
 
-  .content-wrapper {
-    max-width: 100%;
+  .section.active-section {
+    display: block; /* stacked layout on mobile */
+  }
+
+  .sidebar-col {
+    width: 100%;
+    position: static;
+    margin-bottom: 30px;
+  }
+
+  .content-col {
+    width: 100%;
   }
 
   .art-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   .site-footer {
-    left: 20px;
-    bottom: 16px;
+    position: static;
+    margin-top: 40px;
+    margin-left: 20px;
+    padding-bottom: 24px;
   }
 }
 
@@ -761,13 +858,53 @@ ul {
   }
 
   .art-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .projects-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
+}
+
+/* ---- PROJECT & ART CARD BADGE LINKS ---- */
+.project-links,
+.art-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.project-link-btn,
+.art-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 4px;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.project-link-btn:hover,
+.art-link-btn:hover {
+  color: var(--text-primary);
+  background: var(--card-hover-bg);
+  border-color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.project-link-btn:active,
+.art-link-btn:active {
+  transform: translateY(0);
 }
 
 /* ---- UTILITY ---- */
