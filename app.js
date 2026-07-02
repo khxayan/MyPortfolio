@@ -9,19 +9,10 @@
   const html = document.documentElement;
   const themeToggle = document.getElementById('theme-toggle');
   const themeIcon = document.getElementById('theme-icon');
-  const themeBeam = document.getElementById('theme-beam');
 
-  // Load saved theme — suppress transition on initial paint
-  html.classList.add('no-transition');
+  // Load saved theme
   const savedTheme = localStorage.getItem('portfolio-theme') || 'light';
   setTheme(savedTheme);
-  // Re-enable transitions after the first frame
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      html.classList.remove('no-transition');
-    });
-  });
-
 
   function setTheme(theme) {
     html.setAttribute('data-theme', theme);
@@ -29,38 +20,9 @@
     localStorage.setItem('portfolio-theme', theme);
   }
 
-  function triggerThemeTransition(targetTheme) {
-    // Respect reduced motion — instant swap
-    if (
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      !document.startViewTransition
-    ) {
-      setTheme(targetTheme);
-      return;
-    }
-
-    // Set circle origin to toggle button center
-    const rect = themeToggle.getBoundingClientRect();
-    const x = Math.round(rect.left + rect.width / 2);
-    const y = Math.round(rect.top  + rect.height / 2);
-    html.style.setProperty('--theme-origin-x', x + 'px');
-    html.style.setProperty('--theme-origin-y', y + 'px');
-
-    // Native View Transitions API — same as tristanhendricks.vercel.app
-    const transition = document.startViewTransition(() => {
-      setTheme(targetTheme);
-    });
-
-    // Clean up CSS vars after animation completes
-    transition.finished.then(() => {
-      html.style.removeProperty('--theme-origin-x');
-      html.style.removeProperty('--theme-origin-y');
-    }).catch(() => {});
-  }
-
   themeToggle.addEventListener('click', () => {
     const current = html.getAttribute('data-theme');
-    triggerThemeTransition(current === 'dark' ? 'light' : 'dark');
+    setTheme(current === 'dark' ? 'light' : 'dark');
   });
 
   // ---- NAVIGATION ----
@@ -108,7 +70,7 @@
     if (!anchor) return;
     const href = anchor.getAttribute('href').slice(1); // remove '#'
     const validSections = ['home', 'art', 'projects', 'about'];
-    
+
     if (validSections.includes(href)) {
       e.preventDefault();
       showSection(href);
@@ -229,7 +191,7 @@
       const isInput = active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA');
       if (!isInput) {
         const current = html.getAttribute('data-theme');
-        triggerThemeTransition(current === 'dark' ? 'light' : 'dark');
+        setTheme(current === 'dark' ? 'light' : 'dark');
       }
     }
   });

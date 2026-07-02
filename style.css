@@ -48,7 +48,9 @@
 }
 
 /* ---- RESET ---- */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -59,37 +61,13 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ---- SMOOTH THEME TRANSITIONS ---- */
-/*
-  All elements smoothly interpolate color/bg/border when the theme
-  CSS variables change. Duration matches the View Transitions circle.
-  The `transition-property` list is explicit to avoid animating layout.
-*/
-*,
-*::before,
-*::after {
-  transition:
-    background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    color            0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    border-color     0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow       0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity          0.3s ease,
-    fill             0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Disable theme transition during page load to avoid flash */
-html.no-transition *,
-html.no-transition *::before,
-html.no-transition *::after {
-  transition: none !important;
-}
-
 body {
   font-family: var(--font-mono);
   background-color: var(--bg);
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
   position: relative;
 }
 
@@ -124,11 +102,9 @@ ul {
   height: 120vh;
   top: -20%;
   right: -10%;
-  background: linear-gradient(
-    135deg,
-    var(--beam-color-1) 0%,
-    transparent 60%
-  );
+  background: linear-gradient(135deg,
+      var(--beam-color-1) 0%,
+      transparent 60%);
   transform: rotate(-25deg);
   transform-origin: top right;
   animation: beamFloat1 12s ease-in-out infinite alternate;
@@ -139,70 +115,36 @@ ul {
   height: 100vh;
   top: 10%;
   right: 5%;
-  background: linear-gradient(
-    150deg,
-    var(--beam-color-2) 0%,
-    transparent 55%
-  );
+  background: linear-gradient(150deg,
+      var(--beam-color-2) 0%,
+      transparent 55%);
   transform: rotate(-15deg);
   transform-origin: top center;
   animation: beamFloat2 16s ease-in-out infinite alternate;
 }
 
-/* ---- VIEW TRANSITIONS API — THEME SWITCH ---- */
-/*
-  Uses the native document.startViewTransition() — same technique as
-  tristanhendricks.vercel.app. The new theme slides in as a circle
-  expanding from the toggle button, while the old theme fades out.
-*/
-
-/* The old page snapshot fades out from full opacity to zero */
-::view-transition-old(root) {
-  animation: theme-out 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-/* The new page snapshot expands from a circle at the button origin */
-::view-transition-new(root) {
-  animation: theme-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-
-@keyframes theme-in {
-  from {
-    clip-path: circle(0px at var(--theme-origin-x, 50%) var(--theme-origin-y, 50%));
-  }
-  to {
-    clip-path: circle(200vmax at var(--theme-origin-x, 50%) var(--theme-origin-y, 50%));
-  }
-}
-
-@keyframes theme-out {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-/* Fallback: if View Transitions not supported, just fade body colours */
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none;
-  }
-  body {
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-}
-
-/* Keep the old .theme-beam element but make it invisible (JS still references it) */
-.theme-beam {
-  display: none;
-}
-
 @keyframes beamFloat1 {
-  0% { transform: rotate(-25deg) translateY(0); opacity: 0.5; }
-  100% { transform: rotate(-20deg) translateY(-3%); opacity: 0.7; }
+  0% {
+    transform: rotate(-25deg) translateY(0);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: rotate(-20deg) translateY(-3%);
+    opacity: 0.7;
+  }
 }
+
 @keyframes beamFloat2 {
-  0% { transform: rotate(-15deg) translateX(0); opacity: 0.3; }
-  100% { transform: rotate(-10deg) translateX(2%); opacity: 0.5; }
+  0% {
+    transform: rotate(-15deg) translateX(0);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: rotate(-10deg) translateX(2%);
+    opacity: 0.5;
+  }
 }
 
 /* ---- NAVIGATION ---- */
@@ -306,8 +248,15 @@ ul {
 }
 
 @keyframes fadeInSection {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .sidebar-col {
@@ -543,12 +492,29 @@ ul {
   position: relative;
 }
 
-.art-1 { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); }
-.art-2 { background: linear-gradient(135deg, #2d1b69, #11998e, #38ef7d); }
-.art-3 { background: linear-gradient(135deg, #642b73, #c6426e); }
-.art-4 { background: linear-gradient(135deg, #f7971e, #ffd200); }
-.art-5 { background: linear-gradient(135deg, #1e3c72, #2a5298); }
-.art-6 { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); }
+.art-1 {
+  background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+}
+
+.art-2 {
+  background: linear-gradient(135deg, #2d1b69, #11998e, #38ef7d);
+}
+
+.art-3 {
+  background: linear-gradient(135deg, #642b73, #c6426e);
+}
+
+.art-4 {
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+}
+
+.art-5 {
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.art-6 {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+}
 
 .art-title {
   font-family: var(--font-mono);
@@ -612,7 +578,7 @@ ul {
 
 .preview-nav {
   height: 8px;
-  background: rgba(255,255,255,0.12);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 4px;
   margin-bottom: 8px;
 }
@@ -629,7 +595,7 @@ ul {
   font-family: var(--font-mono);
   font-size: 0.6rem;
   line-height: 1.5;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   font-weight: 500;
 }
 
@@ -638,12 +604,29 @@ ul {
 }
 
 /* Project preview backgrounds */
-.proj-1 { background: linear-gradient(135deg, #0d1117, #1e293b, #334155); }
-.proj-2 { background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e); }
-.proj-3 { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
-.proj-4 { background: linear-gradient(135deg, #0a0a1a, #1a1a3a, #2d2d6b); }
-.proj-5 { background: linear-gradient(135deg, #f093fb, #f5576c); }
-.proj-6 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.proj-1 {
+  background: linear-gradient(135deg, #0d1117, #1e293b, #334155);
+}
+
+.proj-2 {
+  background: linear-gradient(135deg, #ffecd2, #fcb69f, #ff9a9e);
+}
+
+.proj-3 {
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+}
+
+.proj-4 {
+  background: linear-gradient(135deg, #0a0a1a, #1a1a3a, #2d2d6b);
+}
+
+.proj-5 {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+}
+
+.proj-6 {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
 
 .project-info {
   padding: 0 2px;
@@ -794,9 +777,11 @@ ul {
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border);
   border-radius: 2px;
@@ -817,7 +802,8 @@ ul {
   }
 
   .section.active-section {
-    display: block; /* stacked layout on mobile */
+    display: block;
+    /* stacked layout on mobile */
   }
 
   .sidebar-col {
